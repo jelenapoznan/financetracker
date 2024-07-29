@@ -29,7 +29,12 @@ class CSV:
     print('Entry added successfuly!')
 
 
+def add():
+  CSV.initialize_csv()
+  date = get_date("Enter the date of transaction", allow_default=True)
+  amount = get_amount()
+  category = get_category()
+  description = get_description()
+  CSV.add_entry(date, amount, category, description)
 
-
-CSV.initialize_csv()
-CSV.add_entry('26-07-2024', 450, "Income", "Salary")
+add()
