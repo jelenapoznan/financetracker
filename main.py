@@ -18,13 +18,16 @@ class CSV:
 
   @classmethod
   def add_entry(cls, date, amount, category, description):
+    # Using disctionary to write into the correct columns when we use csv writer. 
     new_entry = {
       'date': date,
       'amount': amount,
       'category': category,
       'description': description
     }
+    # 'a' appending to the end of the file
     with open(cls.CSV_FILE, 'a', newline='') as csvfile:
+      # Taking the dictionary and write that in csv file
       writer = csv.DictWriter(csvfile, fieldnames= cls.COLUMNS)
       writer.writerow(new_entry)
     print('Entry added successfuly!')
@@ -33,10 +36,12 @@ class CSV:
   @classmethod
   def get_transactions(cls, start_date, end_date):
     df = pd.read_csv(cls.CSV_FILE)
+    # Converte dates inside date column into datetime object to use them to filter by different transactions
     df['date'] = pd.to_datetime(df['date'], format = CSV.FORMAT)
+    # Date that was given is in a form of str, we want to convert it to the right format
     start_date = datetime.strptime(start_date, CSV.FORMAT)
     end_date = datetime.strptime(end_date, CSV.FORMAT)
-
+    # We can compare dates, which we couldn't do if date was sting
     mask = (df['date'] >= start_date) & (df['date'] <= end_date)
     filtered_df = df.loc[mask]
 
@@ -56,7 +61,7 @@ class CSV:
     return filtered_df
 
 
-
+# f that will call f in the order that we want in order to colect our data
 def add():
   CSV.initialize_csv()
   date = get_date("Enter the date of transaction", allow_default=True)
@@ -65,5 +70,4 @@ def add():
   description = get_description()
   CSV.add_entry(date, amount, category, description)
 
-
-CSV.get_transactions("20-07-2024", "29-07-2024")
+CSV.get_transactions("06-07-2024", "07-08-2024")

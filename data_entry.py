@@ -1,7 +1,7 @@
 from datetime import datetime
 
 date_format = '%d-%m-%Y'
-CATEGORIES = {'I': 'Income', 'E': 'Expence'}
+CATEGORIES = {'I': 'Income', 'E': 'Expense'}
 
 def get_date(prompt, allow_default = False):
   date_str = input(prompt)
